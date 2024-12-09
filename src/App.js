@@ -84,7 +84,7 @@ function ImageGallery() {
       {res.map((val) => {
         return (
           <>
-            <img
+            <img href={val.urls.full}
               src={val.urls.small}
               alt="val.alt_description"
             />
