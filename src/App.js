@@ -59,35 +59,50 @@ const App = () => {
 function ImageGallery() {
   const [img, setImg] = useState("");
   const [res, setRes] = useState([]);
+  const [count, setCount] = useState(18);
 
   return (
     <>
-    <h1>poopoo</h1>
-    <input
+    <div className='title'>Image Gallery</div>
+    <input 
+    className='imgSearch'
         type="text"
         placeholder="Search Anything..."
         value={img}
         onChange={(e) => setImg(e.target.value)}
       />
-    <button onClick={() => {
-      fetch(`https://api.unsplash.com/search/photos?page=1&query=${img}&client_id=QnW67Q4WplwE5bPkIcLdBPXsHFIyW7bg_qUjYXl9o84`, [])
-      .then((res) => res.json())
-      .then((data) => {
-        const result = data.results;
-        console.log(result)
-        setRes(result)
+      <input 
+      className='imgCount'
+        type='number'
+        placeholder='10'
+        value={count}
+        onChange={(e) => setCount(e.target.value)}
+      />
+    <button
+      className='searchButton'
+      onClick={() => {
+        fetch(`https://api.unsplash.com/search/photos?page=1&query=${img}&client_id=QnW67Q4WplwE5bPkIcLdBPXsHFIyW7bg_qUjYXl9o84&per_page=${count}`, [])
+        .then((res) => res.json())
+        .then((data) => {
+          const result = data.results;
+          console.log(result)
+          setRes(result)
         }
           
         )} 
-    }>Add</button>
+    }>Search</button>
     <div>
       {res.map((val) => {
         return (
           <>
-            <img href={val.urls.full}
+          <a target='_blank' href={val.urls.full}>
+            <img
+              className='image'
               src={val.urls.small}
               alt="val.alt_description"
+              href="google.com"
             />
+          </a>  
           </>
         );
       })}
